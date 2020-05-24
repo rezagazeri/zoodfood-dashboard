@@ -1,11 +1,14 @@
 html body .app.flex-row.align-items-center {
-  height: 100vh;
+    height: 100vh;
+    font-family: 'IranianSans';
+    font-size: 1rem;
 }
 
 // ie11 floating footer temp fix, react only
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  #root {
-    display: flex;
-    flex-direction: column;
-  }
+@media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+    #root {
+        display: flex;
+        flex-direction: column;
+    }
 }

@@ -1,55 +1,43 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import React from "react";
+import * as yup from "yup";
+import { withFormik, yupToFormErrors } from "formik";
 
-import './login.scss';
+import SiginForm from "./SigninForm";
 
-class Login extends Component {
-  render() {
-    return (
-      <div className="app flex-row align-items-center">
-        <Container>
-          <Row className="justify-content-center">
-            <Col md="5">
-                <Card className="p-4">
-                  <CardBody>
-                    <Form>
-                      <h1 className="signin-header">ورود به زودفود </h1>
-                      <p className="text-muted signin-title">با رمز ورود و پسورد وارد شوید</p>
-                      <InputGroup className="mb-3">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-user"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input type="text" placeholder="نام کاربری" autoComplete="username" />
-                      </InputGroup>
-                      <InputGroup className="mb-4">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-lock"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input type="password" placeholder="رمز ورود" autoComplete="current-password" />
-                      </InputGroup>
-                      <Row>
-                        <Col xs="12 " >
-                          <Button color="primary" className="btn-block">ورود</Button>
-                        </Col>
-                        <Col xs="12" className="text-center">
-                          <Button color="link" className="px-0 mt-2">رمز عبور خود را فراموش کرده‌اید؟</Button>
-                        </Col>
-                      </Row>
-                    </Form>
-                  </CardBody>
-                </Card>
-                
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    );
-  }
-}
+const MyEnhancedForm = withFormik({
+  mapPropsToValues: () => ({ username: "", password: "" }),
+
+  // Custom sync validation
+  validate: (values) => {
+    const schema = yup.object().shape({
+      username: yup
+        .string()
+        .min(4, "نام کاربری باید بیشتر از ۴ حرف باشد")
+        .required()
+        .typeError("Invalid number"),
+      password: yup
+        .string()
+        .min(6, "پسورد باید بیشتر از ۶ حرف باشد")
+        .max(30, "پسورد باید کمتر از ۳۰ حرف باشد")
+        .required(),
+    });
+
+    try {
+      schema.validateSync(values, { abortEarly: false });
+      return {};
+    } catch (error) {
+      return yupToFormErrors(error);
+    }
+  },
+
+  handleSubmit: (values, { setSubmitting }) => {
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+    }, 1000);
+  },
+})(SiginForm);
+
+const Login = () => <MyEnhancedForm />;
 
 export default Login;

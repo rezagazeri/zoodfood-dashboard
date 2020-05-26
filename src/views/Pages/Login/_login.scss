@@ -1,0 +1,22 @@
+.signin-header {
+    font-size: 1.286rem;
+    line-height: 1.22;
+    font-weight: 700;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid $color-gray-dark-2;
+    color: $color-grey-dark;
+}
+
+.signin-title {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.login-background {
+    height: 100vh;
+    background-image: linear-gradient(rgba($color-secondary, .53), rgba($color-secondary, .53)), url('./../../../assets/img/food-Backgrounds.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

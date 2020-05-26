@@ -1,0 +1,37 @@
+.has-error {
+    position: absolute;
+    z-index: 10;
+    display: block;
+    right: 100%;
+    bottom: 95%;
+    margin-right: -160px;
+    margin-bottom: 10px;
+    background: #ef5662;
+    white-space: nowrap;
+    padding: 9px 25px;
+    color: #fff;
+    z-index: 2;
+    &:before {
+        width: 0;
+        height: 0;
+        border-color: #ef5662 transparent transparent;
+        border-style: solid;
+        border-width: 10px 12px 0;
+        top: 100%;
+        right: 35px;
+        content: "";
+        position: absolute;
+    }
+}
+
+.form-control::-webkit-input-placeholder {
+    color: $color-gray-dark-2;
+    font-size: 0.8rem;
+}
+
+.form-lable {
+    color: $color-grey-dark-1;
+    font-size: 0.95rem;
+    margin-bottom: 11px;
+    letter-spacing: -.6px
+}

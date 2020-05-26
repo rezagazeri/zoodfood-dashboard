@@ -2,3 +2,7 @@
     font-family: 'IranianSans';
     src: local('IranianSans'), url('./../assets/font/IranianSans.ttf') format('truetype');
 }
+
+//====================================================custum style ======================
+@import './../views/Pages/Login/login';
+@import './../components/FormInput/forminput';

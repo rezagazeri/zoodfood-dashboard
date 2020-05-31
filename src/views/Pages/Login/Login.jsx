@@ -1,43 +1,48 @@
-import React from "react";
+import React, { useContext,useEffect } from "react";
+import { Formik } from "formik";
 import * as yup from "yup";
-import { withFormik, yupToFormErrors } from "formik";
-
+import AuthContext from "./../../../context/auth/authContext";
 import SiginForm from "./SigninForm";
 
-const MyEnhancedForm = withFormik({
-  mapPropsToValues: () => ({ username: "", password: "" }),
+const validationSchema = yup.object({
+  username: yup
+    .string()
+    .min(4, "نام کاربری باید بیشتر از ۴ حرف باشد")
+    .required()
+    .typeError("Invalid number"),
+  password: yup
+    .string()
+    .min(6, "پسورد باید بیشتر از ۶ حرف باشد")
+    .max(30, "پسورد باید کمتر از ۳۰ حرف باشد")
+    .required(),
+});
 
-  // Custom sync validation
-  validate: (values) => {
-    const schema = yup.object().shape({
-      username: yup
-        .string()
-        .min(4, "نام کاربری باید بیشتر از ۴ حرف باشد")
-        .required()
-        .typeError("Invalid number"),
-      password: yup
-        .string()
-        .min(6, "پسورد باید بیشتر از ۶ حرف باشد")
-        .max(30, "پسورد باید کمتر از ۳۰ حرف باشد")
-        .required(),
-    });
+const Login = () => {
+  const authContext = useContext(AuthContext);
+  const { login, token ,isAuthenticated,error,clearError} = authContext;
 
-    try {
-      schema.validateSync(values, { abortEarly: false });
-      return {};
-    } catch (error) {
-      return yupToFormErrors(error);
-    }
-  },
+  useEffect(()=>{
+    if(isAuthenticated)props.history.push('/dashboard');
+    if(error)
+},[isAuthenticated,error,props.history])
 
-  handleSubmit: (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 1000);
-  },
-})(SiginForm);
-
-const Login = () => <MyEnhancedForm />;
+  return (
+    <Formik
+      initialValues={{
+        username: "",
+        password: "",
+      }}
+      validationSchema={validationSchema}
+      onSubmit={(values, { resetForm, setSubmiting }) => {
+        console.log(token);
+        login(values);
+        resetForm();
+        setSubmiting(false);
+      }}
+    >
+      {(props) => <SiginForm {...props} />}
+    </Formik>
+  );
+};
 
 export default Login;

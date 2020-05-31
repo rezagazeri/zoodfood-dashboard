@@ -46,7 +46,7 @@ const SiginForm = (props) => {
                   />
                   <Row>
                     <Col xs="12 ">
-                      <Button type ="submit" color="primary" className="btn-block">
+                      <Button type="submit" color="primary" className="btn-block">
                         ورود
                       </Button>
                     </Col>
